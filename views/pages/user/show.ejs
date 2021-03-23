@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>User</title>
+	<link rel="stylesheet"  href="/css/bootstrap.css">
+</head>
+<div class="container mt-3"></div>
+<body>
+	<div class="card-text-center">
+		<div class="card-header">
+	<%- include('../components/navbar') %>
+	<a href="/users">Kembali</a>
+
+	<h1>Detail User</h1>
+	<ul>
+		<li>Nama: <strong><%=user.name %></strong></li>
+		<li>Email: <strong><%=user.email %></strong></li>
+	</ul>
+
+	<a href="/users/<%=user._id %>/edit">&nbsp;Edit</a>
+	<a href="/users/id">&nbsp;Delete</a>
+
+	<footer>
+		<p>&copy; 2021 Erpi Resty Utari</p>
+	</footer>
+</body>
+</html>

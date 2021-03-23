@@ -10,7 +10,12 @@ var myLogger = function (request, response, next) {
   next()
 }
 
+const mongoose = require('mongoose')
+
+mongoose.connect('mongodb://localhost:27017/erpi', {useNewUrlParser: true, useUnifiedTopology: true})
+
 app.use(myLogger)
+
 app.use(express.static('public'))
 
 app.set('view engine', 'ejs')

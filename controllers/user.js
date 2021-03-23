@@ -1,26 +1,86 @@
-let users = [
-	{id: 1, name: 'Erpi Resty Utari', email: 'restyerpi147@gmail.com'},
-	{id: 2, name: 'Sarina', email: 'sarina01@gmail.com'}
-]
+//const { v4: uuidv4 } = require('uuid')
+
+const User = require('../models/user')
+// let users = [
+// 	{id: 1, name: 'Erpi Resty Utari', email: 'restyerpi147@gmail.com'},
+// 	{id: 2, name: 'Sarina', email: 'sarina01@gmail.com'}
+// ]
 
 module.exports = {
 	index: function(request, response){
-		response.render('pages/user/index', {users})
+		let keyword = {}
+
+		if(request.query.keyword){
+			keyword = {name: {$regex: request.query.keyword}} 
+		}
+		//carapertama
+		// User.find(keyword, "name _id", function(error, users){
+		// if(error) console.log(error)
+
+		// console.log(users)
+		// response.render('pages/user/index', {users})	
+		// })
+
+		//carakedua
+		const query = User.find(keyword)
+		query.select('name _id')
+		query.exec(function(error, users){
+			if(error) console.log(error)
+
+		 console.log(users)
+		 response.render('pages/user/index', {users})	
+		
+		})
+		
 	
 },
-	create :function(request,response){
+	show: function(request, response){
+		const id = request.params.id
+		// const data = users.filter(user => {
+		// 	return user.id == id
+		// })
+		User.findById(id, function(error, data){
+			if(error) console.log(error)
+				console.log(data)
+			response.render('pages/user/show', {user: data})
+		})
+		
+	},
+	create:function(request,response){
 		response.render('pages/user/create')
 	},
 	store: function(request, response){
-		users.push(request.body)
-		response.send({
-			status: true,
-			data: users,
-			message: 'Data users berhasil disimpan',
-			method: request.method,
-			url: request.url	
+		 const user = new User({
+			name: request.body.name,
+			email: request.body.email,
+			password: request.body.password,
+		})
+
+		 user.save(function(error, data){
+		 	if(error) console.log(error)
+
+		 	console.log(data)
+			response.redirect('/users')	
+		})
+
+		// users.push({
+		// 	id: uuidv4(),
+		// 	name:request.body.name,
+		// 	email: request.body.email
+		// })
+	
+		
+	},
+	
+	edit: function(request, response){
+		const id = request.params.id
+
+		User.findById(id, function(error, data){
+			if (error) console.log(error) 
+			response.render('pages/user/edit', {user: data})
 		})
 	},
+
 	update:  function(request, response){
 	const id = request.params.id
 	users.filter(user => {

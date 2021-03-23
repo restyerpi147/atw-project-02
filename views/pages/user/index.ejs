@@ -4,19 +4,29 @@
 	<title>User</title>
 	<link rel="stylesheet"  href="/css/bootstrap.css">
 </head>
+<div class="container mt-3"></div>
 <body>
+	<div class="card-text-center">
+		<div class="card-header">
 	<%- include('../components/navbar') %>
 	<a href="/users/create">Register</a>
 	<h1>Daftar User</h1>
+	<form action="/users">
+		&nbsp;
+		<input type="text" name="keyword" >
+		<button type="submit">Cari</button>
 	<ul>
 		<% users.forEach( function(user){ %> 
-		<li><%=user.name %></li>
+		<li><a href="/users/<%=user. id %>"> 
+			<%=user.name.toUpperCase() %></a></li>
 		<% }) %>
 	
 	</ul>
 	<footer>
 	<p>&copy; 2021 Erpi Resty Utari</p>
 	</footer>
+	</div>
+</div>
 </body>
 </html>
 
